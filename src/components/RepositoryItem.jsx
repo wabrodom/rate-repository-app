@@ -1,13 +1,34 @@
-import { View, Text } from "react-native"
+import { View, Image, StyleSheet } from "react-native"
+import Text from "./Text";
+import Tag from "./Tag";
+import RepoStatus from "./RepoStatus";
+import ItemSeparator from "./ItemSeparator";
 
-/* 
-    fullName,
-    description,
-    language,
-    stargazersCount,
-    forksCount,
-    ratingAverage,
-*/
+
+const styles = StyleSheet.create({
+    avatar: {
+        width: 70,
+        height: 70,
+        borderRadius: 2,
+    },
+    flexContainer: {
+        flexDirection: 'row',
+        gap: 15,
+        margin: '0 5 10 5',
+        padding: 5,
+        // borderColor: "black",
+        // borderStyle: 'solid',
+        // borderWidth: 1
+    },
+    flexContainerRow: {
+        flexDirection:'row'
+    },
+    flexItem: {
+        flexGrow: 1,
+    }
+
+}) 
+
 const RepositoryItem = (props) => {
     const { 
             fullName,
@@ -16,17 +37,38 @@ const RepositoryItem = (props) => {
             stargazersCount,
             forksCount,
             reviewCount,
-            ratingAverage } = props.data;
+            ratingAverage,
+            ownerAvatarUrl
+        } = props.data;
 
     return (
-        <View >
-            <Text>Full name: {fullName}</Text>
-            <Text>Description: {description}</Text>
-            <Text>Language: {language}</Text>
-            <Text>Stars: {stargazersCount}</Text>
-            <Text>Forks: {forksCount}</Text>
-            <Text>Reviews: {reviewCount}</Text>
-            <Text>Rating: {ratingAverage}</Text>
+        <View>
+            <View style={styles.flexContainer}>
+                <Image
+                    style={styles.avatar}
+                    source={{
+                        uri: ownerAvatarUrl 
+                    }}
+                />
+                <View style={styles.flexItem}>
+                    <Text fontSize='subheading' fontWeight='bold'>{fullName}</Text>
+
+                    <View style={styles.flexContainerRow}>
+                        <Text style={{flex: 1}}> {description}</Text>
+                    </View>
+                    <Tag>{language}</Tag>
+
+                </View>
+
+            </View>
+            
+            <View style={styles.flexContainer}>
+                <RepoStatus text='Stars: ' stat={stargazersCount} />
+                <RepoStatus text='Forks: ' stat={forksCount} />
+                <RepoStatus text='Reviews: ' stat={reviewCount} />
+                <RepoStatus text='Rating: ' stat={ratingAverage} />
+            </View>
+            <ItemSeparator/>
         </View>
     )
 }
