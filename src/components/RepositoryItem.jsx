@@ -2,7 +2,6 @@ import { View, Image, StyleSheet } from "react-native"
 import Text from "./Text";
 import Tag from "./Tag";
 import RepoStatus from "./RepoStatus";
-import ItemSeparator from "./ItemSeparator";
 
 
 const styles = StyleSheet.create({
@@ -14,7 +13,11 @@ const styles = StyleSheet.create({
     flexContainer: {
         flexDirection: 'row',
         gap: 15,
-        margin: '0 5 10 5',
+        // margin: '0 5 10 5',
+        marginTop: 0,
+        marginRight: 5,
+        marginBottom: 10,
+        marginLeft: 5,
         padding: 5,
         // borderColor: "black",
         // borderStyle: 'solid',
@@ -68,7 +71,7 @@ const RepositoryItem = (props) => {
                 <RepoStatus text='Reviews: ' stat={reviewCount} />
                 <RepoStatus text='Rating: ' stat={ratingAverage} />
             </View>
-            <ItemSeparator/>
+
         </View>
     )
 }
