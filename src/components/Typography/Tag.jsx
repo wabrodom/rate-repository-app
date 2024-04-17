@@ -21,7 +21,7 @@ const Tag = ( { style, children, ...props }) => {
 
     return (
         <Text>
-            <ViewTag style={tagStyle} {...  props}>
+            <ViewTag style={tagStyle} {...props}>
                     <Text color='white'>{children}</Text>
             </ViewTag>
         </Text>

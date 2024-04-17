@@ -28,6 +28,8 @@ const AppBar = () => {
     return (
         <View style={styles.container}>
 
+            <ScrollView horizontal contentContainerStyle={styles.flexContainer} >
+                
                 <Pressable onPress={handlePress}>
                     <Link to='/'>
                         <Heading color='white'>
@@ -35,7 +37,6 @@ const AppBar = () => {
                         </Heading>
                     </Link>
                 </Pressable>
-            <ScrollView horizontal contentContainerStyle={styles.flexContainer} >
 
                 <Pressable>
                     <Link to='/signin'>
@@ -45,18 +46,7 @@ const AppBar = () => {
                     </Link>
                 </Pressable>
 
-                <Subheading color='white'>
-                    mock button
-                </Subheading>
-                <Subheading color='white'>
-                    mock button
-                </Subheading>
-                <Subheading     color='white'>
-                    mock button
-                </Subheading>
-                <Subheading color='white'>
-                    mock button
-                </Subheading>
+    
            
          
 
