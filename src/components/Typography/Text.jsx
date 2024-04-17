@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
             ios: theme.fonts.ios,
             default: theme.fonts.main,
         }),
+        // color: Platform.OS === 'web' ? 'salmon': 'blue',
     } 
 });
 
