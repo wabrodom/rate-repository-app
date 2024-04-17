@@ -1,7 +1,8 @@
 import { View, Image, StyleSheet } from "react-native"
-import Text from "./Text";
-import Tag from "./Tag";
+import Text from "./Typography/Text";
+import Tag from "./Typography/Tag";
 import RepoStatus from "./RepoStatus";
+import Subheading from "./Typography/Subheading";
 
 
 const styles = StyleSheet.create({
@@ -54,7 +55,9 @@ const RepositoryItem = (props) => {
                     }}
                 />
                 <View style={styles.flexItem}>
-                    <Text fontSize='subheading' fontWeight='bold'>{fullName}</Text>
+                    <Subheading>
+                        {fullName}
+                    </Subheading>
 
                     <View style={styles.flexContainerRow}>
                         <Text style={{flex: 1}}> {description}</Text>
