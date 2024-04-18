@@ -1,4 +1,4 @@
-import { TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { useFormik } from 'formik';
 import Button from "./Button";
 import Text from "./Typography/Text";
@@ -57,7 +57,7 @@ const SignIn = () => {
   });
 
   return (
-    <form style={styles.flexContainer}>
+    <View style={styles.flexContainer}>
        <TextInput
          id="username"
          name="username"
@@ -94,7 +94,7 @@ const SignIn = () => {
       </Button>
   
 
-     </form>
+     </View>
   );
 };
 
