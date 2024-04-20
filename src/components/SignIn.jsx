@@ -7,26 +7,22 @@ import theme from "../theme";
 
 import * as yup from 'yup';
 import useSignIn from "../hooks/useSignIn";
-
+import { useNavigate } from "react-router-native";
 
 const SignIn = () => {
-  const initialValues = {
-    username: '',
-    password: ''
-  };
-
   const [signIn] = useSignIn();
+  const navigate = useNavigate();
+
+  const initialValues = { username: '',password: '' };
 
   const onSubmit = async () => {
     const { username, password } = formik.values;
 
     try {
-      const response = await signIn({ username, password })
-      const token = response.data.authenticate.accessToken
-
-      console.log('the response data', token)
+      await signIn({ username, password })
+      navigate('/');
     } catch (error) {
-      console.log('the catch error : ', error)
+      console.log('signIn error : ', error)
     }
    
   };
