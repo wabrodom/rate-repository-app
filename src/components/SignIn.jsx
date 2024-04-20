@@ -6,6 +6,7 @@ import Subheading from "./Typography/Subheading";
 import theme from "../theme";
 
 import * as yup from 'yup';
+import useSignIn from "../hooks/useSignIn";
 
 
 const SignIn = () => {
@@ -14,8 +15,20 @@ const SignIn = () => {
     password: ''
   };
 
-  const onSubmit = () => {
-    console.log( `'${formik.values.username}' logged in` )  
+  const [signIn] = useSignIn();
+
+  const onSubmit = async () => {
+    const { username, password } = formik.values;
+
+    try {
+      const response = await signIn({ username, password })
+      const token = response.data.authenticate.accessToken
+
+      console.log('the response data', token)
+    } catch (error) {
+      console.log('the catch error : ', error)
+    }
+   
   };
 
   const validationSchema = yup.object().shape({
