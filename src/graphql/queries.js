@@ -42,3 +42,12 @@ export const testUser = gql`
     }
   }
 `
+
+export const currentUser = gql`
+  query {
+    me {
+      id
+      username
+    }
+  }
+`
