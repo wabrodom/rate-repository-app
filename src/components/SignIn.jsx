@@ -21,7 +21,7 @@ const SignIn = () => {
 
     try {
       await signIn({ username, password })
-      navigate('/');
+      navigate('/', { replace: true });
     } catch (error) {
       console.log('signIn error : ', error)
     }
