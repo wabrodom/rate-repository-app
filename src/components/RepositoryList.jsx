@@ -1,12 +1,12 @@
-import { useQuery } from '@apollo/client';
-import { GET_REPOSITORIES } from '../graphql/queries';
+
 
 import { FlatList } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import ItemSeparator from "./ItemSeparator";
+import useRepositories from '../hooks/useRepositories';
 
 
-const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
@@ -22,13 +22,7 @@ const RepositoryListContainer = ({ repositories }) => {
 }
 
 const RepositoryList = () => {
-  const { data, loading } = useQuery(GET_REPOSITORIES)
-  
-  if (loading) {
-    return null;
-  }
-  
-  const repositories = data.repositories;
+  const { repositories } = useRepositories();
 
   return <RepositoryListContainer repositories={repositories} />
 };

@@ -46,7 +46,7 @@ const RepositoryItem = (props) => {
         } = props.data;
 
     return (
-        <View>
+        <View testID="repositoryItem">
             <View style={styles.flexContainer}>
                 <Image
                     style={styles.avatar}
@@ -69,8 +69,8 @@ const RepositoryItem = (props) => {
             </View>
             
             <View style={styles.flexContainer}>
-                <RepoStatus text='Stars: ' stat={stargazersCount} />
-                <RepoStatus text='Forks: ' stat={forksCount} />
+                <RepoStatus text='Stars: ' stat={stargazersCount} testID='stars'/>
+                <RepoStatus text='Forks: ' stat={forksCount} testID='forks'/>
                 <RepoStatus text='Reviews: ' stat={reviewCount} />
                 <RepoStatus text='Rating: ' stat={ratingAverage} />
             </View>
