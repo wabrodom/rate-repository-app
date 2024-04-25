@@ -69,8 +69,8 @@ const RepositoryItem = (props) => {
             </View>
             
             <View style={styles.flexContainer}>
-                <RepoStatus text='Stars: ' stat={stargazersCount} testID='stars'/>
-                <RepoStatus text='Forks: ' stat={forksCount} testID='forks'/>
+                <RepoStatus text='Stars: ' stat={stargazersCount} />
+                <RepoStatus text='Forks: ' stat={forksCount}/>
                 <RepoStatus text='Reviews: ' stat={reviewCount} />
                 <RepoStatus text='Rating: ' stat={ratingAverage} />
             </View>

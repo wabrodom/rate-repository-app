@@ -48,54 +48,43 @@ describe('RepositoryList', () => {
         ],
       };
 
-      // Add your test code here
       render(<RepositoryListContainer repositories={repositories}/>);
-
-
-      screen.debug();
+     
+      // screen.debug({ mapProps: ({ style, ...props }) => ({ props }) })
 
       const repositoryItems = screen.getAllByTestId('repositoryItem');
-      const [firstRepositoryItem, secondRepositoryItem] = repositoryItems;
-       /* 
-        repository's name,
-       description, 
-       language, 
-       forks count, 
-       stargazers count, 
-       rating average, 
-       and review count
-       */
-
-      const forks = screen.queryAllByTestId('forks')
-      const stars = screen.queryAllByTestId('stars')
-
-      const first_Fullname    = repositories.edges[0].node.fullName
-      const first_Description = repositories.edges[0].node.description
-      const first_language    = repositories.edges[0].node.language
-      const first_forks       = repositories.edges[0].node.forksCount
-      const first_stargazers  = repositories.edges[0].node.stargazersCount
-      const first_ratingAvg   = repositories.edges[0].node.ratingAverage
-      const first_reviewCount = repositories.edges[0].node.reviewCount
-
-      const reg_first_Fullname    = new RegExp(first_Fullname)   
-      const reg_first_Description = new RegExp(first_Description) 
-      const reg_first_language    = new RegExp(first_language)    
-      const reg_first_forks       = new RegExp(/forks:/, 'i');    
-      const reg_first_stargazers  = new RegExp(/stars:/, 'i')  
-      const reg_first_ratingAvg   = new RegExp(first_ratingAvg)   
-      const reg_first_reviewCount = new RegExp(first_reviewCount) 
-
-      expect(firstRepositoryItem).toHaveTextContent(reg_first_Fullname);
-      expect(firstRepositoryItem).toHaveTextContent(reg_first_Description);
-      expect(firstRepositoryItem).toHaveTextContent(reg_first_language);
+      const [firstRepositoryItem, secondRepositoryItem] = repositoryItems
       
-      expect(firstRepositoryItem).toContainElement(forks[0]);
-      expect(firstRepositoryItem).toContainElement(stars[0]);
 
-      expect(firstRepositoryItem).toHaveTextContent(reg_first_stargazers);
+      const repostoriesItemTest = () => {
+        let count = 0; 
 
-      expect(firstRepositoryItem).toHaveTextContent(reg_first_ratingAvg);
-      expect(firstRepositoryItem).toHaveTextContent(reg_first_reviewCount);
+        return function(item) {
+          const forksElementParent  = within(item).getByText(/forks/i).parent.parent.parent;
+          const startsElementParent = within(item).getByText(/stars/i).parent.parent.parent;
+  
+          const fullname    = repositories.edges[count].node.fullName
+          const description = repositories.edges[count].node.description
+          const language    = repositories.edges[count].node.language
+          const ratingAvg   = repositories.edges[count].node.ratingAverage
+          const reviewCount = repositories.edges[count].node.reviewCount
+  
+          expect(item).toHaveTextContent(fullname);
+          expect(item).toHaveTextContent(description);
+          expect(item).toHaveTextContent(language);
+          expect(forksElementParent) .toHaveTextContent(/forks:\s*\d+\w*/i)
+          expect(startsElementParent).toHaveTextContent(/stars:\s*\d+\w*/i)
+          expect(item).toHaveTextContent(ratingAvg);
+          expect(item).toHaveTextContent(reviewCount);
+
+          count +=1;
+        }
+      }
+
+      const privateTest = repostoriesItemTest();
+
+      privateTest(firstRepositoryItem);
+      privateTest(secondRepositoryItem);
 
     });
   });
