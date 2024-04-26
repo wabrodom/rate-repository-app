@@ -1,5 +1,6 @@
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react-native';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { expect, jest } from '@jest/globals';
 import SignInContainer from '../components/SignInContainer';
 // import { SignInForm  } from '../components/SignInContainer';
 
@@ -9,24 +10,34 @@ describe('SignIn', () => {
       // render the SignInContainer component, fill the text inputs and press the submit button
       const onSubmit = jest.fn();
 
+     
       render(<SignInContainer onSubmit={onSubmit}/>)
-      // render(<SignInForm onSubmit={onSubmit} />)
+      
 
-      screen.debug()
+      screen.debug({ mapProps: ({ style, ...props }) => ({ props }) } )
+
+      const usernameInput = screen.UNSAFE_getByProps({ "placeHolder": "Username" });
+      const passwordInput = screen.UNSAFE_getByProps({ "placeHolder": "Password" });
+      const signInButton = screen.getByText(/sign in/i)
+
+      act(() => {
+        fireEvent.changeText(usernameInput, 'kalle');
+        fireEvent.changeText(passwordInput, 'password');
+        fireEvent.press(signInButton);
+      })
+
       await waitFor(() => {
         // expect the onSubmit function to have been called once and with a correct first argument
-        fireEvent.changeText(screen.queryAllByRole('input')[0], 'kalle')
-        fireEvent.changeText(screen.queryAllByRole('input')[1], 'password');
+        expect(onSubmit).toHaveBeenCalledTimes(1);
 
-        fireEvent.press(screen.getByText(/sign in/i));
+        expect(onSubmit.mock.calls[0][0]).toEqual({
+          username: 'kalle',
+          password: 'password',
+        });
+
+  
       });
 
-      expect(onSubmit).toHaveBeenCalledTimes(1);
-
-      expect(onSubmit.mock.calls[0][0]).toEqual({
-        username: 'kalle',
-        password: 'password',
-      });
 
 
     });
