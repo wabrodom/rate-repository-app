@@ -1,9 +1,13 @@
-import { View, Image, StyleSheet, Pressable } from "react-native"
+import { View, Image, StyleSheet } from "react-native"
+import { openBrowserAsync } from 'expo-web-browser';
 import Text from "./Typography/Text";
 import Tag from "./Typography/Tag";
+import Button from './Button'
 import RepoStatus from "./RepoStatus";
 import Subheading from "./Typography/Subheading";
-import { useNavigate } from "react-router-native";
+
+import { useRepository } from "../hooks/useRepositories";
+import { useParams } from "react-router-native";
 
 
 const styles = StyleSheet.create({
@@ -34,9 +38,15 @@ const styles = StyleSheet.create({
 
 }) 
 
-const RepositoryItem = (props) => {
+const RepositoryItemQuery = () => {
+    const id = useParams().id;
+    const { loading, repository } = useRepository(id);
+
+    if (loading) {
+        return null;
+    }
+
     const { 
-            id,
             fullName,
             description,
             language,
@@ -44,27 +54,22 @@ const RepositoryItem = (props) => {
             forksCount,
             reviewCount,
             ratingAverage,
-            ownerAvatarUrl
-        } = props.data;
+            ownerAvatarUrl,
+            url
+        } = repository;
 
-    const navigate = useNavigate();
-
-    const handlePress = () => {
-        navigate(`/repo/${id}`)
-    }    
-
+    const goToGithub = () => {
+        openBrowserAsync(url);
+    }
     return (
         <View testID="repositoryItem">
             <View style={styles.flexContainer}>
-                <Pressable onPress={handlePress}>
-                    <Image
-                        style={styles.avatar}
-                        source={{
-                            uri: ownerAvatarUrl 
-                        }}
-                    />
-
-                </Pressable>
+                <Image
+                    style={styles.avatar}
+                    source={{
+                        uri: ownerAvatarUrl 
+                    }}
+                />
                 <View style={styles.flexItem}>
                     <Subheading>
                         {fullName}
@@ -85,9 +90,11 @@ const RepositoryItem = (props) => {
                 <RepoStatus text='Reviews: ' stat={reviewCount} />
                 <RepoStatus text='Rating: ' stat={ratingAverage} />
             </View>
-
+            <Button onPress={goToGithub}>
+                Open in github
+            </Button>
         </View>
     )
 }
 
-export default RepositoryItem;
+export default RepositoryItemQuery;

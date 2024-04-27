@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
-// import Button from "./Button";
+import Button from "./Button";
 import { useFormik } from 'formik';
 // import Text from "./Typography/Text";
 // import Subheading from "./Typography/Subheading";
@@ -72,9 +72,9 @@ const SignInContainer = ({ onSubmit }) => {
         )}
       
 
-      <Pressable onPress={formik.handleSubmit}>
+      <Button onPress={formik.handleSubmit}>
         <Text>Sign In</Text>
-      </Pressable>
+      </Button>
   
 
     </View>
