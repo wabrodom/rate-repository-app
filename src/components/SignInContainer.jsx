@@ -11,12 +11,12 @@ const SignInContainer = ({ onSubmit }) => {
 
   const validationSchema = yup.object().shape({
     username: yup.string()
-      .min(4, 'Username is too Short!')
-      .max(50, 'Username is too Long!')
+      // .min(4, 'Username is too Short!')
+      // .max(50, 'Username is too Long!')
       .required('Username is required'),
     password: yup.string()
-      .min(8, 'Password is too Short!')
-      .max(50, 'Password is too Long!')
+      // .min(8, 'Password is too Short!')
+      // .max(50, 'Password is too Long!')
       .required('Password is required')
   });
 
