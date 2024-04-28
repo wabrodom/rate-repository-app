@@ -88,7 +88,8 @@ const RepositoryInfo = ({ repository }) => {
                 Open in github
             </Button>
 
-            <ItemSeparator/>
+            {reviewCount !== 0 && <ItemSeparator/>}
+            
         </View>
     )
 }

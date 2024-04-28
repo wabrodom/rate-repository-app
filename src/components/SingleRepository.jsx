@@ -27,7 +27,6 @@ const SingleRepository = () => {
       ListHeaderComponent={() => <RepositoryInfo repository={repository}/>}
       ItemSeparatorComponent={<ItemSeparator/>}
       ListFooterComponent={<ItemSeparator/>}
-      ListEmptyComponent={<></>}
     />
   )
 }
