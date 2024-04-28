@@ -24,3 +24,16 @@ export const USER_BASE_FIELDS = gql`
     createdAt
   }
 `
+
+export const REVEW_NODE_FIELDS = gql`
+  fragment reviewNodeFields on Repository {
+    id
+    text
+    rating
+    createdAt
+    user {
+      id
+      username
+    }
+  }
+`

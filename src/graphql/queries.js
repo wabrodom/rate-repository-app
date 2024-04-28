@@ -1,5 +1,5 @@
 import { gql} from '@apollo/client';
-import { REPOSITORY_BASED_FIELDS, USER_BASE_FIELDS } from './fragment';
+import { REPOSITORY_BASED_FIELDS, REVEW_NODE_FIELDS, USER_BASE_FIELDS } from './fragment';
 
 export const GET_REPOSITORIES = gql`
   query {
@@ -28,11 +28,27 @@ export const GET_REPOSITORY = gql`
     repository(id: $repositoryId) {
       ...repositoryBaseFields
       url
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 
   ${REPOSITORY_BASED_FIELDS}
 `
+
+
 
 export const testUser = gql`
   {

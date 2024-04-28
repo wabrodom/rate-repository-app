@@ -28,6 +28,18 @@ const theme = {
       alignItems: 'center',
       flexGrow: 1,
     },
+    flexContainer: {
+      flexDirection: 'row',
+      gap: 15,
+      marginTop: 0,
+      marginRight: 5,
+      marginBottom: 10,
+      marginLeft: 5,
+      padding: 5,
+      // borderColor: "black",
+      // borderStyle: 'solid',
+      // borderWidth: 1
+    }
   };
   
   export default theme;

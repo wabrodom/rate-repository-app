@@ -1,11 +1,11 @@
-import { View, Image, StyleSheet, Pressable } from "react-native"
+import { View, Image, StyleSheet } from "react-native"
+import { openBrowserAsync } from 'expo-web-browser';
 import Text from "./Typography/Text";
 import Tag from "./Typography/Tag";
+import Button from './Button'
 import RepoStatus from "./RepoStatus";
 import Subheading from "./Typography/Subheading";
-import { useNavigate } from "react-router-native";
-import theme from "../theme";
-
+import ItemSeparator from "./ItemSeparator";
 
 const styles = StyleSheet.create({
     avatar: {
@@ -31,13 +31,16 @@ const styles = StyleSheet.create({
     },
     flexItem: {
         flexGrow: 1,
+    },
+    marginBottom: {
+        marginBottom: 10,
     }
 
 }) 
 
-const RepositoryItem = (props) => {
+const RepositoryInfo = ({ repository }) => {
+
     const { 
-            id,
             fullName,
             description,
             language,
@@ -45,27 +48,22 @@ const RepositoryItem = (props) => {
             forksCount,
             reviewCount,
             ratingAverage,
-            ownerAvatarUrl
-        } = props.data;
+            ownerAvatarUrl,
+            url
+        } = repository;
 
-    const navigate = useNavigate();
-
-    const handlePress = () => {
-        navigate(`/repo/${id}`)
-    }    
-
+    const goToGithub = () => {
+        openBrowserAsync(url);
+    }
     return (
         <View testID="repositoryItem">
-            <View style={theme.flexContainer}>
-                <Pressable onPress={handlePress}>
-                    <Image
-                        style={styles.avatar}
-                        source={{
-                            uri: ownerAvatarUrl 
-                        }}
-                    />
-
-                </Pressable>
+            <View style={styles.flexContainer}>
+                <Image
+                    style={styles.avatar}
+                    source={{
+                        uri: ownerAvatarUrl 
+                    }}
+                />
                 <View style={styles.flexItem}>
                     <Subheading>
                         {fullName}
@@ -86,9 +84,13 @@ const RepositoryItem = (props) => {
                 <RepoStatus text='Reviews: ' stat={reviewCount} />
                 <RepoStatus text='Rating: ' stat={ratingAverage} />
             </View>
+            <Button onPress={goToGithub}>
+                Open in github
+            </Button>
 
+            <ItemSeparator/>
         </View>
     )
 }
 
-export default RepositoryItem;
+export default RepositoryInfo;
