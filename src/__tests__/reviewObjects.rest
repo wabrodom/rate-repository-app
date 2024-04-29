@@ -1,0 +1,35 @@
+{ 
+  ownerName: 'jaredpalmer', 
+  repositoryName: 'formik',
+  rating: 50,
+  text: 'Yeah no headache',
+}
+
+
+{ 
+  ownerName: 'reduxjs', 
+  repositoryName: 'redux',
+  rating: 90,
+  text: 'works context provider',
+}
+
+{ 
+  ownerName: 'async-library', 
+  repositoryName: 'react-async',
+  rating: 50,
+  text: 'test review',
+}
+
+{ 
+  ownerName: 'rails', 
+  repositoryName: 'rails',
+  rating: 50,
+  text: 'I would like to try on rail',
+}
+
+{ 
+  ownerName: 'django', 
+  repositoryName: 'django',
+  rating: 50,
+  text: 'some day python',
+}

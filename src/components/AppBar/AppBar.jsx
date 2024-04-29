@@ -40,6 +40,10 @@ const AppBar = ({ me }) => {
                 navigate('/')
                 break;
             }
+            case '/review' : {
+                navigate(to);
+                break;
+            }
             default: {
                 navigate('/')
                 break;
@@ -57,8 +61,13 @@ const AppBar = ({ me }) => {
                 <RepositoriesBar handlePress={handlePress} to='/' />
                 
                 {me
-                    ? <GenericBar text='Sign out' handlePress={handlePress} to='/signout' />
-                    : <GenericBar text='Sign in'  handlePress={handlePress}  to='/signin' />
+                    ?<> 
+                        <GenericBar text='Create a review' handlePress={handlePress} to='/review' />
+                        <GenericBar text='Sign out' handlePress={handlePress} to='/signout' />
+                    </>
+                    : 
+                        <GenericBar text='Sign in'  handlePress={handlePress}  to='/signin' />
+                    
                 }
     
             </ScrollView>

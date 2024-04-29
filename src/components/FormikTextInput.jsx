@@ -31,7 +31,8 @@ const FormikTextInput = ({ name, ...props}) => {
   ]
   return (
     <>
-      <TextInput 
+      <TextInput
+        placeholder={props.placeHolder}
         onChangeText={value => helpers.setValue(value)}
         onBlur={() => helpers.setTouched(true)}
         value={field.value}
