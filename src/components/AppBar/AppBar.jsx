@@ -35,13 +35,17 @@ const AppBar = ({ me }) => {
                 navigate(to);
                 break;
             }
-            case '/signout': {
-                await signOut()
-                navigate('/')
+            case '/signup': {
+                navigate(to);
                 break;
             }
             case '/review' : {
                 navigate(to);
+                break;
+            }
+            case '/signout': {
+                await signOut()
+                navigate('/')
                 break;
             }
             default: {
@@ -66,7 +70,11 @@ const AppBar = ({ me }) => {
                         <GenericBar text='Sign out' handlePress={handlePress} to='/signout' />
                     </>
                     : 
-                        <GenericBar text='Sign in'  handlePress={handlePress}  to='/signin' />
+                    <>
+                        <GenericBar text='Sign In'  handlePress={handlePress}  to='/signin' />
+                        <GenericBar text='Sign Up'  handlePress={handlePress}  to='/signup' />
+                    </>
+
                     
                 }
     
