@@ -30,12 +30,12 @@ export const RepositoryOrderProvider = ({ children }) => {
 export default RepositoryOrderContext;
 
 export const useNotificationOrder = () => {
-  const stateAndDispatch = useContext(RepositoryOrderContext)
-  return stateAndDispatch[0]
+  const stateAndDispatch = useContext(RepositoryOrderContext);
+  return stateAndDispatch[0];
 }
 
 export const useNotificationDispatch = () => {
-  const dispatch = useContext(RepositoryOrderContext)[1]
+  const dispatch = useContext(RepositoryOrderContext)[1];
   return ({ orderBy, orderDirection }) => {
     dispatch({
       type: 'SET_ORDER',

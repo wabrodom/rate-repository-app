@@ -1,24 +1,34 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { Picker } from '@react-native-picker/picker'
-import { useNotificationDispatch } from '../../contexts/RepositoryOrderContext';
+import { useNotificationDispatch, useNotificationOrder } from '../../contexts/RepositoryOrderContext';
 
-const RepositoryOrderPicker = ({ onDatafromChild }) => {
-  const [orderBy, setOrderBy] = useState('CREATED_AT');
-  const [orderDirection, setOrderDirection] = useState('DESC');
+const RepositoryOrderPicker = () => {
+  const defaultValue = {
+    "orderBy": 'CREATED_AT',
+    "orderDirection": 'DESC'
+  };
+
+  const order = useNotificationOrder();
+  const [orderBy, setOrderBy] = useState(order?.orderBy || defaultValue.orderBy);
+  const [orderDirection, setOrderDirection] = useState(order?.orderDirection || defaultValue.orderDirection);
 
   const setOrder = useNotificationDispatch();
+
+  const styles = StyleSheet.create({
+    padding: {
+      paddingTop: 5,
+      paddingBottom: 5
+    }
+  })
 
   return (
     <View>
       <Picker
+        style={styles.padding}
         selectedValue={orderBy}
-        onValueChange={(itemValue, _itemIndex) => {
+        onValueChange={(itemValue) => {
           setOrderBy(itemValue)
-          onDatafromChild({
-            "orderBy": itemValue,
-            "orderDirection": orderDirection
-          })
           setOrder({
             "orderBy": itemValue,
             "orderDirection": orderDirection
@@ -26,18 +36,15 @@ const RepositoryOrderPicker = ({ onDatafromChild }) => {
         }
       }>
         
-        <Picker.Item label="review date" value="CREATED_AT" />
-        <Picker.Item label="rating average" value="RATING_AVERAGE" />
+        <Picker.Item label="Review Date" value="CREATED_AT" />
+        <Picker.Item label="Rating Average" value="RATING_AVERAGE" />
       </Picker>
       
       <Picker
+        style={styles.padding}
         selectedValue={orderDirection}
-        onValueChange={(itemValue, _itemIndex) => {
+        onValueChange={(itemValue) => {
           setOrderDirection(itemValue)
-          onDatafromChild({
-            "orderBy": orderBy,
-            "orderDirection": itemValue
-          })
           setOrder({
             "orderBy": orderBy,
             "orderDirection": itemValue

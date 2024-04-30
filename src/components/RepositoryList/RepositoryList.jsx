@@ -5,16 +5,11 @@ import ItemSeparator from "../ItemSeparator";
 import useRepositories from '../../hooks/useRepositories';
 import RepositoryOrderPicker from './RepositoryOrderPicker';
 import { useNotificationOrder } from '../../contexts/RepositoryOrderContext';
-import { RepositoryOrderProvider } from '../../contexts/RepositoryOrderContext';
-import { useState } from 'react';
 
-export const RepositoryListContainer = ({ repositories, onDatafromChild }) => {
+export const RepositoryListContainer = ({ repositories }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
-
-  const orderObject = useNotificationOrder()
-  onDatafromChild(orderObject)
 
   return (
     <FlatList
@@ -28,21 +23,14 @@ export const RepositoryListContainer = ({ repositories, onDatafromChild }) => {
   );
 }
 
-const RepositoryList = () => {
-  const defaultValue = {
-    "orderBy": 'CREATED_AT',
-    "orderDirection": 'DESC'
-  };
-  // const [orderFromChild, setOrderFromChild] = useState(defaultValue);
-  // const { repositories } = useRepositories(orderFromChild);
-  const [order, setOrder] = useState(defaultValue);
-  const { repositories } = useRepositories(order);
 
-  return (
-    <RepositoryOrderProvider>
-      <RepositoryListContainer repositories={repositories} onDatafromChild={setOrder} />
-    </RepositoryOrderProvider>
-  )
+const RepositoryList = () => {
+  const orderObject = useNotificationOrder()
+  const { repositories } = useRepositories(orderObject);
+
+  // console.log(orderObject)
+
+  return <RepositoryListContainer repositories={repositories} />
 };
 
 export default RepositoryList;

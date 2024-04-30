@@ -11,6 +11,7 @@ import SignIn from './SignIn/SignIn';
 import SingleRepository from './SingleRepository/SingleRepository';
 import ReviewForm from './ReviewForm/ReviewForm';
 import SignUp from './SignUp/SignUp';
+import { RepositoryOrderProvider } from '../contexts/RepositoryOrderContext';
 
 const styles = StyleSheet.create({
     container: {
@@ -32,14 +33,18 @@ const Main = () => {
     return (
       <View style={styles.container}>
           <AppBar me={data.me} />
-          <Routes>
-            <Route path='/' element={<RepositoryList/>} />
-            <Route path='/signin' element={<SignIn />} />
-            <Route path="*" element={<Navigate to='/' replace />} />
-            <Route path='/repo/:id' element={<SingleRepository />} />
-            <Route path='/review' element={<ReviewForm />} />
-            <Route path='/signup' element={<SignUp />} />
-          </Routes>
+          <RepositoryOrderProvider>
+            <Routes>
+
+              <Route path='/' element={<RepositoryList/>} />
+              <Route path='/signin' element={<SignIn />} />
+              <Route path="*" element={<Navigate to='/' replace />} />
+              <Route path='/repo/:id' element={<SingleRepository />} />
+              <Route path='/review' element={<ReviewForm />} />
+              <Route path='/signup' element={<SignUp />} />
+
+            </Routes>
+          </RepositoryOrderProvider>
           
       </View>
   )
