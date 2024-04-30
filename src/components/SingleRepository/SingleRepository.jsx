@@ -1,10 +1,10 @@
 import { FlatList } from "react-native";
-import { useRepository } from "../hooks/useRepositories";
+import { useRepository } from "../../hooks/useRepositories";
 import { useParams } from "react-router-native";
 
 import RepositoryInfo from "./RepositoryInfo";
 import ReviewItem from "./ReviewItem";
-import ItemSeparator from "./ItemSeparator";
+import ItemSeparator from "../ItemSeparator";
 
 
 const SingleRepository = () => {

@@ -1,6 +1,6 @@
 import { View } from "react-native"
-import Text from "./Typography/Text"
-import theme from "../theme";
+import Text from "../Typography/Text"
+import theme from "../../theme";
 
 const RepoStatus = ({text, stat}) => {
     const style = theme.flexRepoStatus

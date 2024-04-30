@@ -1,8 +1,8 @@
 import { View, StyleSheet } from "react-native";
-import Text from "./Typography/Text";
+import Text from "../Typography/Text";
 import { format } from 'date-fns'
 
-import theme from "../theme";
+import theme from "../../theme";
 const ReviewItem = ( { review }) => {
   const { rating, createdAt, user, text } = review;
 

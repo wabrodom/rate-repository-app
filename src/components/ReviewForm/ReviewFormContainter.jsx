@@ -1,11 +1,11 @@
 
 import { View, StyleSheet } from "react-native";
 import { Formik } from 'formik';
-import Button from "./Button";
-import Subheading from "./Typography/Subheading";
+import Button from "../Button";
+import Subheading from "../Typography/Subheading";
 
 import * as yup from 'yup';
-import FormikTextInput from "./FormikTextInput";
+import FormikTextInput from "../FormikTextInput";
 
 const ReviewFormContainter = ({ onSubmit }) => {
 

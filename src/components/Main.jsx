@@ -4,12 +4,12 @@ import { Route, Routes, Navigate } from 'react-router-native';
 import { useQuery } from '@apollo/client';
 import { currentUser } from '../graphql/queries';
 
-import RepositoryList from './RepositoryList';
+import RepositoryList from './RepositoryList/RepositoryList';
 import AppBar from './AppBar/AppBar';
-import SignIn from './SignIn';
+import SignIn from './SignIn/SignIn';
 
-import SingleRepository from './SingleRepository';
-import ReviewForm from './ReviewForm';
+import SingleRepository from './SingleRepository/SingleRepository';
+import ReviewForm from './ReviewForm/ReviewForm';
 import SignUp from './SignUp/SignUp';
 
 const styles = StyleSheet.create({

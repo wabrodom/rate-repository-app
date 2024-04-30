@@ -21,7 +21,7 @@ const SingUpContainer = ({ onSubmit }) => {
     password: yup.string().required('password is required'),
     passwordConfirm: yup.string()
        .oneOf([yup.ref('password'), null])
-       .required('Password confirm is required')
+       .required('Password confirmation is required')
   });
 
 

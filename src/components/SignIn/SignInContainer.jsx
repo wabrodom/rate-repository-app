@@ -1,9 +1,9 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
-import Button from "./Button";
+import Button from "../Button";
 import { useFormik } from 'formik';
 // import Text from "./Typography/Text";
 // import Subheading from "./Typography/Subheading";
-import theme from "../theme";
+import theme from "../../theme";
 import * as yup from 'yup';
 
 const SignInContainer = ({ onSubmit }) => {
