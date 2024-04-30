@@ -1,62 +1,27 @@
 
-
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import ItemSeparator from "../ItemSeparator";
 import useRepositories from '../../hooks/useRepositories';
-
-import { Picker } from '@react-native-picker/picker'
+import RepositoryOrderPicker from './RepositoryOrderPicker';
+import { useNotificationOrder } from '../../contexts/RepositoryOrderContext';
+import { RepositoryOrderProvider } from '../../contexts/RepositoryOrderContext';
 import { useState } from 'react';
-
-const RepositoryOrderPicker = ({ onDatafromChild }) => {
-  const [orderBy, setOrderBy] = useState('CREATED_AT');
-  const [orderDirection, setOrderDirection] = useState('DESC');
-
-  return (
-    <View>
-      <Picker
-        selectedValue={orderBy}
-        onValueChange={(itemValue, itemIndex) => {
-          setOrderBy(itemValue)
-          onDatafromChild({
-            "orderBy": itemValue,
-            "orderDirection": orderDirection
-          })
-        }
-      }>
-        
-        <Picker.Item label="review date" value="CREATED_AT" />
-        <Picker.Item label="rating average" value="RATING_AVERAGE" />
-      </Picker>
-      
-      <Picker
-        selectedValue={orderDirection}
-        onValueChange={(itemValue, itemIndex) => {
-          setOrderDirection(itemValue)
-          onDatafromChild({
-            "orderBy": orderBy,
-            "orderDirection": itemValue
-          })
-        }
-      }>
-        <Picker.Item label="Ascending" value="ASC" />
-        <Picker.Item label="Descending" value="DESC" />
-      </Picker>
-    </View>
-  )
-}
-
 
 export const RepositoryListContainer = ({ repositories, onDatafromChild }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
+  const orderObject = useNotificationOrder()
+  onDatafromChild(orderObject)
+
   return (
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={ <RepositoryOrderPicker onDatafromChild={onDatafromChild} /> }
+      // ListHeaderComponent={ <RepositoryOrderPicker onDatafromChild={onDatafromChild} /> }
+      ListHeaderComponent={ <RepositoryOrderPicker /> }
       renderItem={ ({ item }) => <RepositoryItem data={item} /> }
       keyExtractor={item => item.id}
     />
@@ -68,11 +33,16 @@ const RepositoryList = () => {
     "orderBy": 'CREATED_AT',
     "orderDirection": 'DESC'
   };
-  const [orderFromChild, setOrderFromChild] = useState(defaultValue);
+  // const [orderFromChild, setOrderFromChild] = useState(defaultValue);
+  // const { repositories } = useRepositories(orderFromChild);
+  const [order, setOrder] = useState(defaultValue);
+  const { repositories } = useRepositories(order);
 
-  const { repositories } = useRepositories(orderFromChild);
-
-  return <RepositoryListContainer repositories={repositories} onDatafromChild={setOrderFromChild} />
+  return (
+    <RepositoryOrderProvider>
+      <RepositoryListContainer repositories={repositories} onDatafromChild={setOrder} />
+    </RepositoryOrderProvider>
+  )
 };
 
 export default RepositoryList;
