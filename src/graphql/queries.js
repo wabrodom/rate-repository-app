@@ -51,6 +51,19 @@ export const GET_REPOSITORY = gql`
   ${REPOSITORY_BASED_FIELDS}
 `
 
+export const SEARCH_REPOSITORIES = gql`
+  query ($searchKeyword: String) {
+    repositories(searchKeyword: $searchKeyword) {
+      edges {
+        node {
+          id
+          fullName
+        }
+      }
+    }
+  }
+`
+
 
 
 export const testUser = gql`

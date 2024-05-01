@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 
-import { GET_REPOSITORIES, GET_REPOSITORY } from "../graphql/queries";
+import { GET_REPOSITORIES, GET_REPOSITORY, SEARCH_REPOSITORIES } from "../graphql/queries";
 
 const useRepositories = ( { orderBy, orderDirection }) => {
   const { data, ...result} = useQuery(GET_REPOSITORIES, {
@@ -28,4 +28,15 @@ export const useRepository = (id) => {
 
 
   return { repository: ( data ? data.repository: undefined ), ...result}
+}
+
+export const useFindRepository = (str) => {
+  const { data, ...result} = useQuery(SEARCH_REPOSITORIES, {
+    variables: {
+      "searchKeyword": str,
+    },
+    fetchPolicy: 'cache-and-network',
+  })
+
+  return { repositories: ( data ? data.repositories: undefined ), ...result}
 }
