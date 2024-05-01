@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 
 import { GET_REPOSITORIES, GET_REPOSITORY, SEARCH_REPOSITORIES } from "../graphql/queries";
 
@@ -30,13 +30,18 @@ export const useRepository = (id) => {
   return { repository: ( data ? data.repository: undefined ), ...result}
 }
 
-export const useFindRepository = (str) => {
-  const { data, ...result} = useQuery(SEARCH_REPOSITORIES, {
-    variables: {
-      "searchKeyword": str,
-    },
-    fetchPolicy: 'cache-and-network',
-  })
+export const useFindRepository = () => {
+  const [getSearchedRopsitories] = useLazyQuery(SEARCH_REPOSITORIES)
 
-  return { repositories: ( data ? data.repositories: undefined ), ...result}
+  const getRepositoryIds = async (value) => {
+    const response = await getSearchedRopsitories({ variables: { "searchKeyword": value } })
+    const repositories = response.data.repositories;
+
+    const repositoryIds = repositories
+      ? repositories.edges.map(edge => edge.node.id)
+      : [];
+
+    return repositoryIds
+  }
+  return getRepositoryIds
 }

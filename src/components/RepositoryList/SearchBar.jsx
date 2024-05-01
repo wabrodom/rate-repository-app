@@ -1,34 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import theme from '../../theme';
-import { useFindRepository } from '../../hooks/useRepositories';
 
-import { useLazyQuery } from '@apollo/client';
-import { SEARCH_REPOSITORIES } from '../../graphql/queries';
+import {useFindRepository} from '../../hooks/useRepositories'
 
 const SearchBar = ( { setSearchFilter }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const getRepositoryIds = useFindRepository();
 
-  const [getSearchRepo,  { data }] = useLazyQuery(SEARCH_REPOSITORIES)
-  
-  let repositoryIds = [];
-  
-  if (data) {
-    console.log(data)
-    const repositories = data.repositories;
-    repositoryIds = repositories && searchQuery
-      ? repositories.edges.map(edge => edge.node.id)
-      : [];
-
-    console.log(repositoryIds)
-  }
-
-
-  
-  const handleChange = (value) => {
+  const handleOnChangeText = async (value) => {
     setSearchQuery(value)
-    getSearchRepo({ variables: { "searchKeyword": value } })
-    setSearchFilter(repositoryIds)
+    const ids = await getRepositoryIds(value)
+    setSearchFilter(ids)
   }
 
   const styles = StyleSheet.create({
@@ -53,8 +36,7 @@ const SearchBar = ( { setSearchFilter }) => {
         style={styles.searchBar}
         placeholder="Search"
         value={searchQuery}
-        // onChangeText={setSearchQuery}
-        onChangeText={handleChange}
+        onChangeText={handleOnChangeText}
       />
     </View>
   );
