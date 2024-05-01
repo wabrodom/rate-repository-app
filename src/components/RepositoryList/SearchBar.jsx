@@ -3,29 +3,33 @@ import { View, TextInput, StyleSheet } from 'react-native';
 import theme from '../../theme';
 import { useFindRepository } from '../../hooks/useRepositories';
 
+import { useLazyQuery } from '@apollo/client';
+import { SEARCH_REPOSITORIES } from '../../graphql/queries';
+
 const SearchBar = ( { setSearchFilter }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { repositories } = useFindRepository(searchQuery);
 
-  const repositoryIds = repositories && searchQuery
-    ? repositories.edges.map(edge => edge.node.id)
-    : null;
-
-  console.log(searchQuery)
-  console.log('outside', repositoryIds)
+  const [getSearchRepo,  { data }] = useLazyQuery(SEARCH_REPOSITORIES)
   
-  // const handleChange = (value) => {
-  //   setSearchQuery(value);
-  //   setSearchFilter(repositoryIds)
+  let repositoryIds = [];
+  
+  if (data) {
+    console.log(data)
+    const repositories = data.repositories;
+    repositoryIds = repositories && searchQuery
+      ? repositories.edges.map(edge => edge.node.id)
+      : [];
 
-  //   console.log('should change parent state', repositoryIds)
-  // }
+    console.log(repositoryIds)
+  }
 
-  useEffect(()=> {
+
+  
+  const handleChange = (value) => {
+    setSearchQuery(value)
+    getSearchRepo({ variables: { "searchKeyword": value } })
     setSearchFilter(repositoryIds)
-    console.log('state change, call the parent setState', repositoryIds)
-  }, [searchQuery])
-
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -49,7 +53,8 @@ const SearchBar = ( { setSearchFilter }) => {
         style={styles.searchBar}
         placeholder="Search"
         value={searchQuery}
-        onChangeText={setSearchQuery}
+        // onChangeText={setSearchQuery}
+        onChangeText={handleChange}
       />
     </View>
   );

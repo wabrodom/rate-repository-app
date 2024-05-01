@@ -17,7 +17,7 @@ const RepositoryListHeader = ({ setSearchFilter }) => {
 }
 
 export const RepositoryListContainer = ({ repositories }) => {
-  const [searchFilter, setSearchFilter] = useState(null);
+  const [searchFilter, setSearchFilter] = useState([]);
 
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
@@ -25,7 +25,7 @@ export const RepositoryListContainer = ({ repositories }) => {
 
     // console.log(repositoryNodes)
     // console.log('filter', searchFilter)
-  const repositoriesToShow = searchFilter 
+  const repositoriesToShow = searchFilter.length > 0
     ? repositoryNodes.filter(obj => searchFilter.includes(obj.id) )
     : repositoryNodes
 
