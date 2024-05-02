@@ -43,6 +43,10 @@ const AppBar = ({ me }) => {
                 navigate(to);
                 break;
             }
+            case '/myreviews' : {
+                navigate(to);
+                break;
+            }
             case '/signout': {
                 await signOut()
                 navigate('/')
@@ -67,6 +71,7 @@ const AppBar = ({ me }) => {
                 {me
                     ?<> 
                         <GenericBar text='Create a review' handlePress={handlePress} to='/review' />
+                        <GenericBar text='My reviews' handlePress={handlePress} to='/myreviews' />
                         <GenericBar text='Sign out' handlePress={handlePress} to='/signout' />
                     </>
                     : 

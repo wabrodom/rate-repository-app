@@ -12,6 +12,7 @@ import SingleRepository from './SingleRepository/SingleRepository';
 import ReviewForm from './ReviewForm/ReviewForm';
 import SignUp from './SignUp/SignUp';
 import { RepositoryOrderProvider } from '../contexts/RepositoryOrderContext';
+import MyReviews from './MyReviews/MyReviews';
 
 const styles = StyleSheet.create({
     container: {
@@ -42,6 +43,7 @@ const Main = () => {
               <Route path='/repo/:id' element={<SingleRepository />} />
               <Route path='/review' element={<ReviewForm />} />
               <Route path='/signup' element={<SignUp />} />
+              <Route path='/myreviews' element={<MyReviews />} />
 
             </Routes>
           </RepositoryOrderProvider>

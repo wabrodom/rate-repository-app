@@ -3,7 +3,7 @@ import { useRepository } from "../../hooks/useRepositories";
 import { useParams } from "react-router-native";
 
 import RepositoryInfo from "./RepositoryInfo";
-import ReviewItem from "./ReviewItem";
+import ReviewItem from "../ReviewItem";
 import ItemSeparator from "../ItemSeparator";
 
 

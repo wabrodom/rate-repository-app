@@ -79,9 +79,23 @@ export const testUser = gql`
 `
 
 export const currentUser = gql`
-  query {
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
       ...userBaseFields
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 
