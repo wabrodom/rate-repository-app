@@ -34,14 +34,7 @@ export const GET_REPOSITORY = gql`
       reviews {
         edges {
           node {
-            id
-            text
-            rating
-            createdAt
-            user {
-              id
-              username
-            }
+           ...reviewNodeFields
           }
         }
       }
@@ -49,6 +42,7 @@ export const GET_REPOSITORY = gql`
   }
 
   ${REPOSITORY_BASED_FIELDS}
+  ${REVEW_NODE_FIELDS}
 `
 
 export const SEARCH_REPOSITORIES = gql`
@@ -85,14 +79,7 @@ export const currentUser = gql`
       reviews @include(if: $includeReviews) {
         edges {
           node {
-            id
-            text
-            rating
-            createdAt
-            user {
-              id
-              username
-            }
+            ...reviewNodeFields
           }
         }
       }
@@ -100,4 +87,5 @@ export const currentUser = gql`
   }
 
   ${USER_BASE_FIELDS}
+  ${REVEW_NODE_FIELDS}
 `
