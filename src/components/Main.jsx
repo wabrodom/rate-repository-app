@@ -1,8 +1,7 @@
 
 import { StyleSheet, View } from 'react-native';
 import { Route, Routes, Navigate } from 'react-router-native';
-import { useQuery } from '@apollo/client';
-import { currentUser } from '../graphql/queries';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 import RepositoryList from './RepositoryList/RepositoryList';
 import AppBar from './AppBar/AppBar';
@@ -13,6 +12,7 @@ import ReviewForm from './ReviewForm/ReviewForm';
 import SignUp from './SignUp/SignUp';
 import { RepositoryOrderProvider } from '../contexts/RepositoryOrderContext';
 import MyReviews from './MyReviews/MyReviews';
+
 
 const styles = StyleSheet.create({
     container: {
@@ -25,15 +25,15 @@ const styles = StyleSheet.create({
 
  
 const Main = () => {
-    const { loading, data } = useQuery(currentUser);
+    const { loading, currentUser } = useCurrentUser();
       
     if (loading) return null;
 
-    console.log('render useQuery hook, data.me: ', data.me)
+    console.log('render useQuery hook, currentUser: ', currentUser)
 
     return (
       <View style={styles.container}>
-          <AppBar me={data.me} />
+          <AppBar me={currentUser} />
           <RepositoryOrderProvider>
             <Routes>
 

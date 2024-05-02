@@ -72,7 +72,7 @@ export const testUser = gql`
   }
 `
 
-export const currentUser = gql`
+export const CURRENTUSER = gql`
   query getCurrentUser($includeReviews: Boolean = false) {
     me {
       ...userBaseFields

@@ -1,32 +1,27 @@
-import { View } from "react-native"
+import { FlatList } from "react-native"
 import ReviewItem from "../ReviewItem";
-import { useQuery } from '@apollo/client';
-import { currentUser } from "../../graphql/queries";
+import useCurrentUser from "../../hooks/useCurrentUser";
+import ItemSeparator from "../ItemSeparator";
 
 const MyReviews = () => {
-  const { loading, data } = useQuery(currentUser, {
-    variables: {
-      includeReviews: true,
-    }
-  });
+  const { loading, currentUser } = useCurrentUser(true);
 
   if (loading) return null;
 
-  const reviews = data.me.reviews
+  const reviews = currentUser.reviews
 
   const reviewNodes = reviews
     ? reviews.edges.map(edge => edge.node)
     : [];
-
   
   return (
-    
-    <View>
-      {reviewNodes.map(obj =>  (
-        <ReviewItem review={obj} key={obj.id}/>
-        )
-      )}
-    </View>
+    <FlatList 
+      data={reviewNodes}
+      ItemSeparatorComponent={ItemSeparator}
+      renderItem={ ({ item }) => <ReviewItem review={item} /> }
+      keyExtractor={item => item.id}
+    />
+  
   )
 }
 
