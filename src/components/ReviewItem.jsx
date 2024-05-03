@@ -33,7 +33,7 @@ const ReviewBody = ( { review, onMyReviewPage }) => {
             <Text> {rating} </Text>
         </View>
 
-        <View>
+        <View style={{flexGrow: 1}}>
 
           <Text fontWeight='bold'> {onMyReviewPage ?  fullName : user.username} </Text>
           

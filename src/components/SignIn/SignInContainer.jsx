@@ -1,10 +1,10 @@
-import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import Button from "../Button";
 import { useFormik } from 'formik';
-// import Text from "./Typography/Text";
-// import Subheading from "./Typography/Subheading";
+
 import theme from "../../theme";
 import * as yup from 'yup';
+import Subheading from "../Typography/Subheading";
 
 const SignInContainer = ({ onSubmit }) => {
   const initialValues = { username: 'kalle', password: 'password' };
@@ -73,7 +73,9 @@ const SignInContainer = ({ onSubmit }) => {
       
 
       <Button onPress={formik.handleSubmit}>
-        <Text>Sign In</Text>
+        <Subheading color='white'>
+          Sign In
+        </Subheading>
       </Button>
   
 

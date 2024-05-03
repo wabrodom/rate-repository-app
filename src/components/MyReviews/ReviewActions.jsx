@@ -10,6 +10,8 @@ const ReviewActions = ({ repositoryId, id }) => {
   const navigate = useNavigate();
   const [toDelete] = useDeleteReview();
   const { refetch } = useCurrentUser(true);
+  const alertTitle = 'Delete review!';
+  const alertMessage = 'Do you really want to delete your review?';
 
   const toRepository = () => {
     navigate(`/repo/${repositoryId}`, { replace: true })
@@ -22,7 +24,7 @@ const ReviewActions = ({ repositoryId, id }) => {
   }
 
   const createTwoButtonAlert = () =>
-    Alert.alert('Delete review!', 'Do you want to delete your review', [
+    Alert.alert(alertTitle, alertMessage, [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
@@ -34,11 +36,14 @@ const ReviewActions = ({ repositoryId, id }) => {
   const styles = StyleSheet.create({
     deleteButton: {
       backgroundColor: theme.colors.error
+    },
+    flexCenter: {
+      justifyContent: 'center'
     }
   });
 
   return (
-    <View style={theme.flexContainer}>
+    <View style={[theme.flexContainer, styles.flexCenter]}>
       <Button onPress={toRepository}>
         View Repository
       </Button>

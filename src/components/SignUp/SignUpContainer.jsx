@@ -60,7 +60,7 @@ export const SignUpForm = ({ onSubmit }) => {
       
       <Button onPress={onSubmit}>
         <Subheading color='white'>
-          Submit Review
+          Sign Up
         </Subheading>
       </Button>
   </View>
