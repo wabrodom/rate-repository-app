@@ -28,12 +28,16 @@ export const USER_BASE_FIELDS = gql`
 export const REVEW_NODE_FIELDS = gql`
   fragment reviewNodeFields on Review {
     id
+    repositoryId
     text
     rating
     createdAt
     user {
       id
       username
+    }
+    repository {
+      fullName
     }
   }
 `

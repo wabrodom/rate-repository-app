@@ -3,9 +3,12 @@ import Text from "./Typography/Text";
 import { format } from 'date-fns'
 
 import theme from "../theme";
-const ReviewItem = ( { review }) => {
-  const { rating, createdAt, user, text } = review;
+import ReviewActions from "./MyReviews/ReviewActions";
 
+const ReviewBody = ( { review, onMyReviewPage }) => {
+  const { rating, createdAt, user, text, repository } = review;
+  const fullName = repository.fullName;
+  
   const formatedDate = format(createdAt, 'MMMM dd, yyyy');
 
   const style = StyleSheet.create({
@@ -23,26 +26,42 @@ const ReviewItem = ( { review }) => {
   });
 
   return (
-    <View style={theme.flexContainer}>
+ 
+      <View style={theme.flexContainer}>
 
-      <View style={style.circleborder}>
-          <Text> {rating} </Text>
-      </View>
+        <View style={style.circleborder}>
+            <Text> {rating} </Text>
+        </View>
 
-      <View>
+        <View>
 
-        <Text fontWeight='bold'> {user.username} </Text>
-        
-        <Text> {formatedDate} </Text>
+          <Text fontWeight='bold'> {onMyReviewPage ?  fullName : user.username} </Text>
+          
+          <Text> {formatedDate} </Text>
 
-        <View style={{flexDirection: 'row'}}>
-          <Text style={{flex: 1}}> {text} </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{flex: 1}}> {text} </Text>
+          </View>
+
         </View>
 
       </View>
-
-    </View>
   )
 } 
+
+
+
+const ReviewItem = ( { review, onMyReviewPage = false }) => {
+  const { repositoryId, id } = review;
+
+  return (
+    <View>
+      <ReviewBody review={review} onMyReviewPage={onMyReviewPage} />
+      { onMyReviewPage && 
+        <ReviewActions repositoryId={repositoryId} id={id} /> 
+      } 
+    </View>
+  )
+}
 
 export default ReviewItem;

@@ -3,13 +3,15 @@ import Text from './Typography/Text';
 import { Pressable, StyleSheet } from 'react-native';
 
 
-const Button = ({ onPress, children, ...props}) => {
+const Button = ({ onPress, children, style, ...props}) => {
+
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
-        pressed && styles.pressed
+        pressed && styles.pressed,
+        style
       ]}
       {...props}
     >
