@@ -33,16 +33,32 @@ const useRepositories = ( variables ) => {
 
 export default useRepositories;
 
-export const useRepository = (id) => {
-  const { data, ...result } = useQuery(GET_REPOSITORY, {
-    variables: {
-      "repositoryId": id,
-    },
+export const useRepository = (variables) => {
+  const { data, loading, fetchMore, ...result } = useQuery(GET_REPOSITORY, {
+    variables,
     fetchPolicy: 'cache-and-network',
   });
 
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage;
+    if(!canFetchMore) {
+      return;
+    }
 
-  return { repository: ( data ? data.repository: undefined ), ...result}
+    fetchMore({
+      variables: {
+        after: data.repository.reviews.pageInfo.endCursor,
+        ...variables
+      }
+    })
+  }
+
+  return { 
+    repository: ( data ? data.repository: undefined ),
+    loading,
+    fetchMore: handleFetchMore,
+    ...result
+  }
 }
 
 export const useFindRepository = () => {

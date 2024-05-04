@@ -27,22 +27,28 @@ export const GET_REPOSITORIES = gql`
 
 
 export const GET_REPOSITORY = gql`
-  query single($repositoryId: ID!) {
+  query Repository($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
       ...repositoryBaseFields
       url
-      reviews {
-        edges {
-          node {
-           ...reviewNodeFields
+      reviews(first: $first, after: $after) {
+          edges {
+            node {
+              ...reviewNodeFields
+            }
+            cursor
           }
+        pageInfo {
+          endCursor
+          hasNextPage
+          startCursor
         }
       }
     }
   }
-
   ${REPOSITORY_BASED_FIELDS}
   ${REVEW_NODE_FIELDS}
+
 `
 
 export const SEARCH_REPOSITORIES = gql`
