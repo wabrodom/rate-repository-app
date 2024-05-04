@@ -15,8 +15,8 @@ const RepositoryOrderContext = createContext();
 
 export const RepositoryOrderProvider = ({ children }) => {
   const defaultValue = {
-    "orderBy": 'CREATED_AT',
-    "orderDirection": 'DESC'
+      "orderBy": 'CREATED_AT',
+      "orderDirection": 'DESC'
   };
 
   const [order, orderDispatch] = useReducer(repositoryOrderReducer, defaultValue);
@@ -39,7 +39,10 @@ export const useNotificationDispatch = () => {
   return ({ orderBy, orderDirection }) => {
     dispatch({
       type: 'SET_ORDER',
-      payload: { orderBy, orderDirection }
+      payload: {
+        orderBy, 
+        orderDirection,
+      }
     });
   }
 }

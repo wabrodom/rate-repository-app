@@ -16,15 +16,13 @@ const RepositoryListHeader = ({ setSearchFilter }) => {
   )
 }
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, onEndReach }) => {
   const [searchFilter, setSearchFilter] = useState([]);
 
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
-    // console.log(repositoryNodes)
-    // console.log('filter', searchFilter)
   const repositoriesToShow = searchFilter.length > 0
     ? repositoryNodes.filter(obj => searchFilter.includes(obj.id) )
     : repositoryNodes
@@ -33,10 +31,11 @@ export const RepositoryListContainer = ({ repositories }) => {
     <FlatList
       data={repositoriesToShow}
       ItemSeparatorComponent={ItemSeparator}
-      // ListHeaderComponent={ <RepositoryOrderPicker onDatafromChild={onDatafromChild} /> }
       ListHeaderComponent={<RepositoryListHeader setSearchFilter={setSearchFilter} /> }
       renderItem={ ({ item }) => <RepositoryItem data={item} /> }
       keyExtractor={item => item.id}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 }
@@ -44,11 +43,18 @@ export const RepositoryListContainer = ({ repositories }) => {
 
 const RepositoryList = () => {
   const orderObject = useNotificationOrder()
-  const { repositories } = useRepositories(orderObject);
 
-  // console.log(orderObject)
+  const { repositories, fetchMore } = useRepositories({
+    first: 8,
+    orderObject
+  });
 
-  return <RepositoryListContainer repositories={repositories} />
+  const onEndReach = () => {
+    console.log('reach the end of list')
+    fetchMore();
+  }
+
+  return <RepositoryListContainer repositories={repositories} onEndReach={onEndReach} />
 };
 
 export default RepositoryList;
